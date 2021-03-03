@@ -1,0 +1,41 @@
+    {% extends "../base/base.html" %}
+    {% block title %}
+    Welcome to Blog
+    {% endblock %}
+    {% block content %}
+    {% include "base/nav-main.html" %}
+
+    <div class="container">
+      <div class="py-5">
+        <div class="row">
+          {% for post in posts %}
+          <div class="col-md-4 d-flex align-self-stretch">
+          <a class="text-dark" href="{{post.get_absolute_url}}">
+              <div class="inside-article">
+              <div class="embed-responsive embed-responsive-16by9">
+                <img class="card-img-top m-0 p-0 embed-responsive-item rounded" style="object-fit: cover;" src="{{post.image.url}}" alt="{{ post.title }}">
+              </div>
+              <div class="card-body">
+              <h2 class="entry-header">{{post.title|truncatechars:250}}</h2>
+            </a>
+            <small class="text-muted">
+             <span>{{ post.publish.date }} | <a class="text-dark" href="category/{{ post.category }}">{{ post.category }}</a> | By: {{ post.author}} 
+               
+             </span> 
+            </small>
+                  <p class="card-text">{{post.excerpt|truncatechars:130}}.</p>
+                  <a href="{{post.get_absolute_url}}"  type="button" class="btn btn-primary btn-sm">Read More &rarr;</a>
+                <div class="d-flex justify-content-between align-items-center">
+                  </div>
+                </div>
+              </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="pagination-container justify-content-center col-md-6">
+        {% include 'blog/pagination.html' with paginator=all_posts%}
+    </div>
+    </div>
+    {% include "base/footer.html" %}
+    {% endblock %}
